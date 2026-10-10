@@ -44,7 +44,7 @@ pipeline {
         stage('Deploy to Server') {
             steps {
                 echo 'Deploying files to remote server...'
-                sshagent(credentials: ['node-app-key']) {
+                sshagent(credentials: ['node-pipeline-key']) {
                     sh """
                         echo "Creating remote directory..."
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} \
@@ -63,7 +63,7 @@ pipeline {
         stage('Setup Environment') {
             steps {
                 echo 'Setting up Python virtual environment on remote server...'
-                sshagent(credentials: ['node-app-key']) {
+                sshagent(credentials: ['node-pipeline-key']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
                             set -e
@@ -99,7 +99,7 @@ pipeline {
         stage('Stop Existing App') {
             steps {
                 echo 'Stopping existing application instances...'
-                sshagent(credentials: ['node-app-key']) {
+                sshagent(credentials: ['node-pipeline-key']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
                             echo "Checking for running app processes..."
@@ -131,7 +131,7 @@ pipeline {
         stage('Start Application') {
             steps {
                 echo 'Starting the Flask application on port ${APP_PORT}...'
-                sshagent(credentials: ['node-app-key']) {
+                sshagent(credentials: ['node-pipeline-key']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
                             set -e
@@ -165,7 +165,7 @@ pipeline {
         stage('Verify Deployment') {
             steps {
                 echo 'Verifying application deployment on port ${APP_PORT}...'
-                sshagent(credentials: ['node-app-key']) {
+                sshagent(credentials: ['node-pipeline-key']) {
                     sh """
                         echo "Waiting for application to be ready..."
                         sleep 5
@@ -212,7 +212,7 @@ pipeline {
         stage('Display Application Info') {
             steps {
                 echo 'Displaying application information...'
-                sshagent(credentials: ['node-app-key']) {
+                sshagent(credentials: ['node-pipeline-key']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
                             echo "=========================================="
@@ -251,7 +251,7 @@ pipeline {
             echo '❌ Check the logs above for details'
             echo '❌ =========================================='
             
-            sshagent(credentials: ['node-app-key']) {
+            sshagent(credentials: ['node-pipeline-key']) {
                 sh """
                     echo "Collecting error logs..."
                     ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
