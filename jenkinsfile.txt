@@ -2,19 +2,19 @@ pipeline {
     agent any
     
     environment {
-        REMOTE_HOST = "13.204.86.75"
+        REMOTE_HOST = "172.31.47.151"
         REMOTE_USER = "ubuntu"
         REMOTE_DIR = "/home/ubuntu/learnhub-app"
-        APP_PORT = "8000"
+        APP_PORT = "5000"
     }
     
     stages {
         stage('Clone Repository') {
             steps {
                 echo 'Cloning repository from GitHub...'
-                git url: 'https://github.com/dalvipiyush07/Python-CI-CD.git', 
-                    branch: 'main', 
-                    credentialsId: 'node-app-key'
+                git url: 'https://github.com/Ritesh123-a/Flask-CI-CD-Deployment-on-AWS-EC2.git', 
+                    branch: 'master', 
+                    credentialsId: 'node-pipeline-key'
             }
         }
         
